@@ -1,0 +1,17 @@
+{
+    "name": "murph/solid-carrinho-compras",
+    "description": "Curso SOLID",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Murph\\SolidCarrinhoCompras\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Diana Dias",
+            "email": "dianadmurphy@gmail.com"
+        }
+    ],
+    "require": {}
+}
