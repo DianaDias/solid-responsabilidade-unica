@@ -1,48 +1,43 @@
 <?php
 require __DIR__."/vendor/autoload.php";
 
-use Murph\SolidCarrinhoCompras\CarrinhoCompras;
+use Murph\SolidCarrinhoCompras\CriarPedido;
 
-$titulo = "CARRINHO DE PEDIDO SOLID";
-$carrinho = new CarrinhoCompras();
-$itens = ["tipo" => 'TV', "valor" => 3000];
-$itens1 = ["tipo" => 'Microondas', "valor" => 300];
-$itens2 = ["tipo" => 'Geladeira', "valor" => 2300];
- 
-$carrinho->inserirItens($itens);
-$carrinho->inserirItens($itens1);
-$carrinho->inserirItens($itens2);
+$criarPedido = new CriarPedido();
+//$itens = [];
+$itens = [['valor' => 300, 'descricao' => 'Tv Samsung'], ['valor' => 1000, 'descricao' => 'Notebook'], ['valor' => 1500, 'descricao' => 'Lavadoura Consul']];
+$pedido = $criarPedido->index($itens);
+$carrinhoValidado = $pedido->getCarrinho()->validarCarrinho();
 
-$carrinhoAtual = $carrinho->exibirItens();
-?>
+echo '<h1>Pedido:</h1> </br>';
+echo '<Objeto pedido>';        
+echo '<pre>';        
+print_r($pedido->getCarrinho()->getProdutos());
+echo '</pre>';
 
-<!doctype html>
-<html lang="en">
-<head>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>
-    <?php
-      if(isset($titulo)) {
-        echo $titulo . ' | ';
-      } 
-    ?>
-  </title>
-</head>
-<body>
-    <h1>CARRINHO DE PEDIDOS</h1>
-    <h2>ITENS</h2>
-  <?php
-    foreach($carrinhoAtual as $itensCarrinho):
-        echo '<li>
-        Produto:' .$itensCarrinho["tipo"]. ' Valor: '.$itensCarrinho["valor"].'</li><br>';
-    endforeach; 
-    $carrinho->alterarStatus("Novo");
-    echo "<br> <b>Status Pedido: </b>".$carrinho->exibirStatus();
-    echo "<br><b> Valor Total Compras:</b> ".$carrinho->calculaValorTotalCarrinho($carrinhoAtual);
-    $carrinho->alterarStatus("Concluido");
-    echo "<br><b> Status Pedido após análise: </b>".$carrinho->exibirStatus();
-    echo "<br><b>".$carrinho->enviarEmail($carrinho->exibirStatus())."</b>";
- ?>
-</body>
-</html>
+echo '<br><b> Validação do carrinho</b> <br>';
+echo $carrinhoValidado;
+
+// $pedido->confirmaPerdido();
+
+echo '<br><br><b> Status do pedido </b><br>';
+echo $carrinhoValidado == 'Carrinho criado' ? $pedido->getStatus() : 'Pedido não foi criado!';
+
+$total = 0;
+
+echo '<br><br><b> Itens do pedido </b><br>';
+if($carrinhoValidado == 'Carrinho criado'){
+    foreach($pedido->getCarrinho()->getProdutos() as $item){
+        echo 'Produto: ' .$item->getDescricao(). ' Valor R$' .$item->getValor(). '<br>';
+        $total += $item->getValor();
+    }
+
+} else {
+    echo 'Pedido não foi criado!';
+}
+
+echo '<br><b> Valor total do pedido </b><br>';
+echo 'R$' .$total;
+
+echo '<br><br><b> Enviar email </b><br>';
+echo $carrinhoValidado == 'Carrinho criado' ? $pedido->enviaEmail() : 'Pedido não foi criado para enviar email!';
