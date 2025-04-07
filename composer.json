@@ -4,7 +4,7 @@
     "type": "project",
     "autoload": {
         "psr-4": {
-            "Murph\\SolidCarrinhoCompras\\": "s/"
+            "Murph\\SolidCarrinhoCompras\\": "src/"
         }
     },
     "authors": [
@@ -13,5 +13,7 @@
             "email": "dianadmurphy@gmail.com"
         }
     ],
-    "require": {}
+    "require-dev": {
+        "phpunit/phpunit": "^12.0"
+    }
 }
