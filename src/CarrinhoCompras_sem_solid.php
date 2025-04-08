@@ -1,8 +1,8 @@
 <?php 
 namespace Murph\SolidCarrinhoCompras;
 
-class CarrinhoComprasSemSolid {
-
+class CarrinhoComprasSemSolid 
+{
     private $itens;
     private $status;
     private $valorTotal;

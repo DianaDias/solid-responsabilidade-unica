@@ -25,6 +25,5 @@ class CriarPedido
         }
        
         return $this->pedido;
-
     }
 }

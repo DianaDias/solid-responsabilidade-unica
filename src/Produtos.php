@@ -2,8 +2,8 @@
 
 namespace Murph\SolidCarrinhoCompras;
 
-class Produtos{
-
+class Produtos
+{
     private $valor;
     private $descricao;
 
@@ -16,7 +16,6 @@ class Produtos{
     function getValor()
     {
         return $this->valor;
-        
     }
 
     function setValor(float $valor)
